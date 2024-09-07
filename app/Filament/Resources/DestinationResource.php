@@ -66,6 +66,16 @@ class DestinationResource extends Resource
                             ->helperText("will use for url you can't change it after create")
                             ->unique(Destination::class, 'slug', ignoreRecord: true),
 
+                        Forms\Components\RichEditor::make('description')
+                            ->label('Description')
+                            ->maxLength(65535)
+                            ->extraAttributes(['wire:ignore' => true]) // Ignore Livewire re-renders
+                            ->disableToolbarButtons([
+                                'attachFiles',
+                            ])
+                            ->required()
+                            ->columnspan('full'),
+
                         Forms\Components\TextInput::make('language')
                             ->label('Language')
                             ->required()
@@ -91,6 +101,18 @@ class DestinationResource extends Resource
                             ->multiple()  // Allow multiple selections
                             ->options(MonthsEnum::class)
                             ->required(),
+
+                    ])
+                    ->columns(2),
+
+
+                Forms\Components\Section::make('Additional Information')
+                    ->schema([
+                        Forms\Components\TextInput::make('google_map_url')
+                            ->label('Google Map URL')
+                            ->required()
+                            ->maxLength(65535)
+                            ->url(),
                         Forms\Components\FileUpload::make('images')
                             ->multiple()
                             ->disk('public')
@@ -103,21 +125,6 @@ class DestinationResource extends Resource
                             ->appendFiles()
                             ->columnSpan('full')
                             ->maxFiles(10)
-                    ])
-                    ->columns(2),
-
-
-                Forms\Components\Section::make('Additional Information')
-                    ->schema([
-                        Forms\Components\TextInput::make('google_map_url')
-                            ->label('Google Map URL')
-                            ->required()
-                            ->maxLength(65535)
-                            ->url(),
-                        Forms\Components\RichEditor::make('description')
-                            ->label('Description')
-                            ->maxLength(65535)
-                            ->required(),
                     ])
                     ->columns(1),
             ]);

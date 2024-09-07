@@ -84,11 +84,11 @@ class UserResource extends Resource
                             ->image()
                             ->avatar()
                             ->imageEditor(),*/
-                        /*   Forms\Components\Select::make('roles')
+                        Forms\Components\Select::make('roles')
                             ->relationship('roles', 'name')
                             ->multiple()
                             ->preload()
-                            ->searchable(), */
+                            ->searchable(),
                         Forms\Components\Select::make('gender')
                             ->options(UserGenderEnum::class),
                         Forms\Components\Toggle::make('status')
@@ -157,10 +157,10 @@ class UserResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
-                /*  Tables\Columns\TextColumn::make('roles.name')
+                 Tables\Columns\TextColumn::make('roles.name')
                     ->label('Role')
                     ->searchable()
-                    ->sortable(), */
+                    ->sortable(),
                 Tables\Columns\IconColumn::make('status')
                     ->sortable()
                     ->toggleable()

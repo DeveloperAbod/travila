@@ -118,11 +118,13 @@ class TourResource extends Resource
                                         Forms\Components\RichEditor::make('overview')
                                             ->label('Tour Overview')
                                             ->maxLength(65535)
+                                            ->extraAttributes(['wire:ignore' => true]) // Ignore Livewire re-renders
                                             ->required(),
 
                                         Forms\Components\RichEditor::make('duration_details')
                                             ->label('Duration Details')
                                             ->maxLength(65535)
+                                            ->extraAttributes(['wire:ignore' => true]) // Ignore Livewire re-renders
                                             ->required(),
 
                                     ]),

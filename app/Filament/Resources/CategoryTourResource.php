@@ -78,6 +78,7 @@ class CategoryTourResource extends Resource
 
                         Forms\Components\RichEditor::make('description')
                             ->label('Description')
+                            ->extraAttributes(['wire:ignore' => true]) // Ignore Livewire re-renders
                             ->maxLength(65535)
                             ->required()
                             ->columnspan('full'),

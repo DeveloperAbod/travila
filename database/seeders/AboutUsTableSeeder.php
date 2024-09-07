@@ -14,14 +14,18 @@ class AboutUsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('about_us')->insert([
-            'email' => 'abod@example.com',
-            'google_map_url' => 'https://maps.google.com/?q=1234+Main+St',
-            'call_number' => 774370569,
-            'whats_number' => 774370569,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        DB::table('about_us')->updateOrInsert(
+            ['id' => 1],  // Check if the record with ID 1 exists
+            [
+                'email' => 'abod@example.com',
+                'google_map_url' => 'https://maps.google.com/?q=1234+Main+St',
+                'call_number' => 774370569,
+                'whats_number' => 774370569,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
     }
 }
+
 // php artisan db:seed --class=aboutUsTableSeeder
