@@ -19,6 +19,24 @@ class PaymentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';
 
+    protected static ?string $navigationGroup = 'Management';
+    protected static ?int $navigationSort = 2;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
+    }
+
+    protected static int $globalSearchResultsLimit = 5;
+
+
     public static function form(Form $form): Form
     {
         return $form
@@ -28,6 +46,7 @@ class PaymentResource extends Resource
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(50)
+                            ->unique(Payment::class, 'name', ignoreRecord: true)
                             ->label('Name'),
                         Forms\Components\FileUpload::make('image')
                             ->disk('public')
@@ -53,6 +72,9 @@ class PaymentResource extends Resource
                 Tables\Columns\ImageColumn::make('image')
                     ->disk('public')
                     ->label('Image'),
+                Tables\Columns\TextColumn::make('creator.name')  // Show creator's name
+                    ->label('Created By')
+                    ->sortable(),
                 Tables\Columns\ToggleColumn::make('status'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created At')

@@ -16,7 +16,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Filament\Tables\Filters\Filter;
@@ -35,6 +34,7 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationGroup = 'User Management';
+
     protected static ?int $navigationSort = 1;
     protected static ?string $navigationLabel = 'Users';
 
@@ -77,13 +77,13 @@ class UserResource extends Resource
                         Forms\Components\TextInput::make('phone')
                             ->rule('regex:/^7\d{8}$/')
                             ->helperText('Phone number must start with 7 and have 9 digits'),
-                        /*  FileUpload::make('avatar_url')
+                        /*   FileUpload::make('avatar_url')
                             ->label('avatar')
                             ->directory('avatar')
                             ->preserveFilenames()
                             ->image()
                             ->avatar()
-                            ->imageEditor(), */
+                            ->imageEditor(),*/
                         /*   Forms\Components\Select::make('roles')
                             ->relationship('roles', 'name')
                             ->multiple()

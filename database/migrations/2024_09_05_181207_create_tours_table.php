@@ -11,19 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('destinations', function (Blueprint $table) {
+        Schema::create('tours', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->string('slug')->unique();
+            $table->string('images');
+            $table->string('duration');
+            $table->decimal('price', 10, 2);
+            $table->integer('group_size');
             $table->string('language');
-            $table->string('country');
-            $table->string('timezone')->default('UTC');  // Timezone, e.g. 'UTC+3'
-            $table->string('currency');
-            $table->json('peak_season');
-            $table->json('images');
-            $table->text('google_map_url');
-            $table->text('description');
+            $table->text('overview');
+            $table->text('duration_details');
+            $table->unsignedBigInteger('category_tour_id');
+            $table->foreign('category_tour_id')->references('id')->on('category_tours');
             $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+
             $table->timestamps();
         });
     }
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('destinations');
+        Schema::dropIfExists('tours');
     }
 };

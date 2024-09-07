@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('about_us', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('image');
-            $table->boolean('status')->default(1);
-            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->string('email');
+            $table->text('google_map_url');
+            $table->integer('call_number');
+            $table->integer('whats_number');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('about_us');
     }
 };

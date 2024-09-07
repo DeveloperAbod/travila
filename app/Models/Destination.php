@@ -18,6 +18,7 @@ class Destination extends Model
      */
     protected $fillable = [
         'name',
+        'slug',
         'language',
         'country',
         'timezone',
@@ -60,13 +61,13 @@ class Destination extends Model
     protected static function booted(): void
     {
 
-            static::deleted(function (Destination $destination) {
-                  if ($destination->images) {
+        static::deleted(function (Destination $destination) {
+            if ($destination->images) {
                 foreach ($destination->images as $image) {
                     Storage::delete("public/$image");
                 }
-                 }
-            });
+            }
+        });
 
 
         static::updating(function (Destination $destination) {
@@ -79,5 +80,11 @@ class Destination extends Model
                 }
             }
         });
+    }
+
+
+    public function tours()
+    {
+        return $this->belongsToMany(Tour::class);
     }
 }

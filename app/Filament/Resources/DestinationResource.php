@@ -7,7 +7,6 @@ use App\Enums\TimeZoneEnum;
 use App\Filament\Resources\DestinationResource\Pages;
 use App\Models\Destination;
 use Filament\Tables\Actions\Action;
-
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -18,7 +17,26 @@ class DestinationResource extends Resource
 {
     protected static ?string $model = Destination::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+
+    protected static ?string $navigationGroup = 'Tour Services';
+    protected static ?int $navigationSort = 3;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'timezone', 'country', 'currency'];
+    }
+
+    protected static int $globalSearchResultsLimit = 5;
+
+
 
     public static function form(Form $form): Form
     {
@@ -45,7 +63,7 @@ class DestinationResource extends Resource
                             ->dehydrated()
                             ->maxLength(255)
                             ->required()
-                            ->helperText("will use for url you can't change it later")
+                            ->helperText("will use for url you can't change it after create")
                             ->unique(Destination::class, 'slug', ignoreRecord: true),
 
                         Forms\Components\TextInput::make('language')
@@ -109,6 +127,10 @@ class DestinationResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->label('#')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\ImageColumn::make('images')
                     ->circular()
                     ->stacked()
@@ -117,12 +139,6 @@ class DestinationResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Name')
                     ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('language')
-                    ->label('Language')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('country')
-                    ->label('Country')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('timezone')
                     ->label('Timezone')
