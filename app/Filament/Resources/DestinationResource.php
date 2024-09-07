@@ -170,11 +170,11 @@ class DestinationResource extends Resource
                     ->dateTime(),
             ])
             ->filters([
-                Tables\filters\SelectFilter::make('timezone')
+                Tables\Filters\SelectFilter::make('timezone')
                     ->label('Timezone')
                     ->options(TimeZoneEnum::class),
 
-                Tables\filters\SelectFilter::make('peak_season')
+                Tables\Filters\SelectFilter::make('peak_season')
                     ->multiple()
                     ->options(MonthsEnum::class)
             ])->filtersTriggerAction(
